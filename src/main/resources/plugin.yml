@@ -1,0 +1,9 @@
+name: AiresBuildings
+main: net.tttproject.airesbuildings.AiresBuildings
+author: nociixD
+api-version: 1.16
+version: 0.1
+
+depend:
+  - ProtocolLib
+  - LuckPerms
