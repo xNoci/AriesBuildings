@@ -6,10 +6,8 @@ import net.luckperms.api.event.EventBus;
 import net.luckperms.api.event.node.NodeMutateEvent;
 import net.luckperms.api.model.group.Group;
 import net.luckperms.api.model.user.User;
-import net.tttproject.airesbuildings.listeners.NodeMutateListener;
-import net.tttproject.airesbuildings.listeners.PlayerAsyncChatListener;
-import net.tttproject.airesbuildings.listeners.PlayerJoinListener;
-import net.tttproject.airesbuildings.listeners.PlayerQuitListener;
+import net.tttproject.airesbuildings.listeners.*;
+import net.tttproject.airesbuildings.utils.AFKHandler;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -21,9 +19,20 @@ import java.util.stream.Collectors;
 
 public class AiresBuildings extends JavaPlugin {
 
+    public static final String PREFIX = "§9AiresBuildings §8» §7";
+
     @Override
     public void onEnable() {
+
+        AFKHandler.instance().register(this);
+        AFKHandler.instance().start(this);
+
         registerListener();
+    }
+
+    @Override
+    public void onDisable() {
+        AFKHandler.instance().stop();
     }
 
     private void registerListener() {
@@ -34,6 +43,7 @@ public class AiresBuildings extends JavaPlugin {
         pluginManager.registerEvents(new PlayerAsyncChatListener(), this);
         pluginManager.registerEvents(new PlayerJoinListener(), this);
         pluginManager.registerEvents(new PlayerQuitListener(), this);
+        pluginManager.registerEvents(new PlayerAFKToggleListener(), this);
 
         eventBus.subscribe(this, NodeMutateEvent.class, NodeMutateListener::handleNodeMutate);
     }

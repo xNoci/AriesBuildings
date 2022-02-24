@@ -4,6 +4,7 @@ import net.luckperms.api.cacheddata.CachedMetaData;
 import net.luckperms.api.model.group.Group;
 import net.md_5.bungee.api.ChatColor;
 import net.tttproject.airesbuildings.AiresBuildings;
+import net.tttproject.airesbuildings.utils.AFKHandler;
 import net.tttproject.airesbuildings.utils.TabList;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -30,6 +31,7 @@ public class PlayerQuitListener implements Listener {
         event.setQuitMessage(String.format("§c« %s", color + displayName + color + " §8| " + color + player.getName()));
 
         TabList.updateAll();
+        AFKHandler.instance().removePlayer(player);
     }
 
 }
