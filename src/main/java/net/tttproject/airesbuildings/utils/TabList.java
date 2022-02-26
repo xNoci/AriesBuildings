@@ -1,75 +1,90 @@
 package net.tttproject.airesbuildings.utils;
 
-import com.comphenix.protocol.wrappers.WrappedChatComponent;
 import net.luckperms.api.cacheddata.CachedMetaData;
 import net.luckperms.api.model.group.Group;
 import net.tttproject.airesbuildings.AiresBuildings;
-import net.tttproject.airesbuildings.packets.WrapperPlayServerScoreboardTeam;
+import net.tttproject.airesbuildings.scoreboardteam.Team;
+import net.tttproject.airesbuildings.scoreboardteam.TeamRegistryManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-
-import java.util.Collections;
 
 public class TabList {
 
     private static final String HEADER = "";
     private static final String FOOTER = "";
 
+    private static final String AFK_SUFFIX = " §o§7[AFK]";
 
     public static void updateAll() {
-        Bukkit.getOnlinePlayers().forEach(TabList::set);
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            player.setPlayerListHeaderFooter(HEADER, FOOTER);
+            createPlayer(player);
+        }
     }
 
-    public static void set(Player player) {
-        player.setPlayerListHeaderFooter(HEADER, FOOTER);
-
-        for (Player target : Bukkit.getOnlinePlayers()) {
-            Group targetGroup = AiresBuildings.getUserGroup(target.getUniqueId());
-            WrapperPlayServerScoreboardTeam team = new WrapperPlayServerScoreboardTeam();
-            team.setPlayers(Collections.singletonList(target.getName()));
-            team.setPackOptionData(0x02);
-
-            if (targetGroup != null) {
-                String teamName = getSortID(targetGroup) + target.getUniqueId().toString().replaceAll("-", "");
-                if (teamName.length() > 16) teamName = teamName.substring(0, 16);
-                team.setName(teamName);
-                team.setPlayers(Collections.singletonList(target.getName()));
-
-                CachedMetaData metaData = targetGroup.getCachedData().getMetaData();
-                String prefix = metaData.getPrefix();
-                String color = metaData.getMetaValue("color");
-
-                if (prefix != null) {
-                    team.setPrefix(WrappedChatComponent.fromText(prefix));
-                }
-
-                if (color != null) {
-                    ChatColor chatColor;
-
-                    if (color.startsWith("§") && color.length() >= 2) {
-                        chatColor = ChatColor.getByChar(color.charAt(1));
-                    } else {
-                        chatColor = ChatColor.valueOf(color);
-                    }
-
-                    team.setColor(chatColor);
-                }
-            } else {
-                String teamName = target.getUniqueId().toString().replaceAll("-", "");
-                if (teamName.length() > 16) teamName = teamName.substring(0, 16);
-                team.setName(teamName);
-                team.setColor(ChatColor.GRAY);
-                team.setPrefix(WrappedChatComponent.fromText("§7Gast §6| §7"));
-            }
-
-
-            team.setMode(WrapperPlayServerScoreboardTeam.Mode.TEAM_REMOVED);
-            team.sendPacket(player);
-            team.setMode(WrapperPlayServerScoreboardTeam.Mode.TEAM_CREATED);
-            team.sendPacket(player);
+    private static void createPlayer(Player player) {
+        TeamRegistryManager teamRegistry = TeamRegistryManager.instance();
+        Team team = teamRegistry.getTeam(player.getUniqueId());
+        if (team != null) {
+            updatePlayer(player);
+            return;
         }
 
+
+        String teamName = 999 + player.getUniqueId().toString().replaceAll("-", "");
+        String prefix = "§7Gast §8| §7";
+        ChatColor color = ChatColor.GRAY;
+
+        Group targetGroup = AiresBuildings.getUserGroup(player.getUniqueId());
+        if (targetGroup != null) {
+            teamName = getSortID(targetGroup) + player.getUniqueId().toString().replaceAll("-", "");
+
+            CachedMetaData metaData = targetGroup.getCachedData().getMetaData();
+            String metaPrefix = metaData.getPrefix();
+            String metaColor = metaData.getMetaValue("color");
+
+            if (metaPrefix != null) {
+                prefix = metaPrefix;
+            }
+
+            if (metaColor != null) {
+                if (metaColor.startsWith("§") && metaColor.length() >= 2) {
+                    color = ChatColor.getByChar(metaColor.charAt(1));
+                } else {
+                    color = ChatColor.valueOf(metaColor);
+                }
+            }
+        }
+
+
+        team = new Team(teamName);
+        team.getPlayers().add(player);
+        team.setCanSeeFriendlyInvisibles(true);
+        team.setCollisionRule(Team.CollisionRule.NEVER);
+        team.setColor(color);
+        team.setPrefix(prefix);
+
+        if (AFKHandler.instance().isAFK(player.getUniqueId())) {
+            team.setSuffix(AFK_SUFFIX);
+        }
+
+        teamRegistry.addTeam(player.getUniqueId(), team);
+        team.broadcastPacket(Team.Mode.TEAM_CREATED);
+    }
+
+    private static void updatePlayer(Player player) {
+        TeamRegistryManager teamRegistry = TeamRegistryManager.instance();
+        Team team = teamRegistry.getTeam(player.getUniqueId());
+        if (team == null) return;
+
+
+        if (AFKHandler.instance().isAFK(player.getUniqueId())) {
+            team.setSuffix(AFK_SUFFIX);
+        } else {
+            team.setSuffix("");
+        }
+        team.broadcastPacket(Team.Mode.TEAM_UPDATED);
     }
 
     private static String getSortID(Group group) {
