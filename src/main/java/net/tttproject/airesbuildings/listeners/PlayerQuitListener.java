@@ -31,7 +31,7 @@ public class PlayerQuitListener implements Listener {
         event.setQuitMessage(String.format("§c« %s", color + displayName + color + " §8| " + color + player.getName()));
 
         AFKHandler.instance().removePlayer(player);
-        TeamRegistryManager.instance().removeTeam(player.getUniqueId());
+        TeamRegistryManager.instance().removeRegistry(player);
     }
 
 }

@@ -1,8 +1,11 @@
 package net.tttproject.airesbuildings.scoreboardteam;
 
 import com.google.common.collect.Maps;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class TeamRegistryManager {
@@ -15,26 +18,38 @@ public class TeamRegistryManager {
         return TeamRegistryManager.InstanceHolder.instance;
     }
 
-    private final HashMap<UUID, Team> teamsMap = Maps.newHashMap();
+    private final HashMap<UUID, PlayerTeamRegistry> registryMap = Maps.newHashMap();
 
     private TeamRegistryManager() {
     }
 
-    public Team getTeam(UUID uuid) {
-        return teamsMap.get(uuid);
+    public PlayerTeamRegistry getRegistry(Player player) {
+        return registryMap.computeIfAbsent(player.getUniqueId(), uuid -> new PlayerTeamRegistry(player));
     }
 
-    public void removeTeam(UUID uuid) {
-        Team team = getTeam(uuid);
-        if (team == null) return;
-        team.broadcastPacket(Team.Mode.TEAM_REMOVED);
-        teamsMap.remove(uuid);
+    public void clearRegistry() {
+        for (PlayerTeamRegistry teamRegistry : registryMap.values()) {
+            teamRegistry.clearTeams();
+        }
+
+        registryMap.clear();
     }
 
-    public void addTeam(UUID uuid, Team team) {
-        removeTeam(uuid);
-        teamsMap.put(uuid, team);
-    }
+    public void removeRegistry(Player player) {
+        for (Map.Entry<UUID, PlayerTeamRegistry> registryEntry : registryMap.entrySet()) {
+            UUID targetUUID = registryEntry.getKey();
+            Player target = Bukkit.getPlayer(targetUUID);
 
+            if (target == null || !target.isOnline()) {
+                registryMap.remove(targetUUID);
+                continue;
+            }
+
+            PlayerTeamRegistry targetRegistry = registryEntry.getValue();
+            targetRegistry.removeTeam(player.getUniqueId());
+        }
+
+        registryMap.remove(player.getUniqueId());
+    }
 
 }

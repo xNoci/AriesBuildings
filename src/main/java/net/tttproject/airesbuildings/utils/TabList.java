@@ -3,6 +3,7 @@ package net.tttproject.airesbuildings.utils;
 import net.luckperms.api.cacheddata.CachedMetaData;
 import net.luckperms.api.model.group.Group;
 import net.tttproject.airesbuildings.AiresBuildings;
+import net.tttproject.airesbuildings.scoreboardteam.PlayerTeamRegistry;
 import net.tttproject.airesbuildings.scoreboardteam.Team;
 import net.tttproject.airesbuildings.scoreboardteam.TeamRegistryManager;
 import org.bukkit.Bukkit;
@@ -19,26 +20,38 @@ public class TabList {
     public static void updateAll() {
         for (Player player : Bukkit.getOnlinePlayers()) {
             player.setPlayerListHeaderFooter(HEADER, FOOTER);
-            createPlayer(player);
+            setTeams(player);
         }
     }
 
-    private static void createPlayer(Player player) {
-        TeamRegistryManager teamRegistry = TeamRegistryManager.instance();
-        Team team = teamRegistry.getTeam(player.getUniqueId());
-        if (team != null) {
-            updatePlayer(player);
-            return;
+    private static void setTeams(Player player) {
+        TeamRegistryManager teamRegistryManager = TeamRegistryManager.instance();
+        PlayerTeamRegistry teamRegistry = teamRegistryManager.getRegistry(player);
+
+        for (Player target : Bukkit.getOnlinePlayers()) {
+            Team targetTeam = teamRegistry.getTeam(target.getUniqueId());
+            if (targetTeam != null) {
+                updateTeam(targetTeam, target);
+                continue;
+            }
+
+            targetTeam = createTeam(target);
+            teamRegistry.addTeam(target.getUniqueId(), targetTeam);
+            teamRegistry.sendPacket(target.getUniqueId(), Team.Mode.TEAM_CREATED);
         }
 
+        teamRegistry.sendPackets(Team.Mode.TEAM_UPDATED);
 
-        String teamName = 999 + player.getUniqueId().toString().replaceAll("-", "");
+    }
+
+    private static Team createTeam(Player target) {
+        String teamName = 999 + target.getUniqueId().toString().replaceAll("-", "");
         String prefix = "§7Gast §8| §7";
         ChatColor color = ChatColor.GRAY;
 
-        Group targetGroup = AiresBuildings.getUserGroup(player.getUniqueId());
+        Group targetGroup = AiresBuildings.getUserGroup(target.getUniqueId());
         if (targetGroup != null) {
-            teamName = getSortID(targetGroup) + player.getUniqueId().toString().replaceAll("-", "");
+            teamName = getSortID(targetGroup) + target.getUniqueId().toString().replaceAll("-", "");
 
             CachedMetaData metaData = targetGroup.getCachedData().getMetaData();
             String metaPrefix = metaData.getPrefix();
@@ -58,33 +71,45 @@ public class TabList {
         }
 
 
-        team = new Team(teamName);
-        team.getPlayers().add(player);
+        Team team = new Team(teamName);
+        team.getPlayers().add(target);
         team.setCanSeeFriendlyInvisibles(true);
         team.setCollisionRule(Team.CollisionRule.NEVER);
         team.setColor(color);
         team.setPrefix(prefix);
 
-        if (AFKHandler.instance().isAFK(player.getUniqueId())) {
+        if (AFKHandler.instance().isAFK(target.getUniqueId())) {
             team.setSuffix(AFK_SUFFIX);
         }
 
-        teamRegistry.addTeam(player.getUniqueId(), team);
-        team.broadcastPacket(Team.Mode.TEAM_CREATED);
+        return team;
     }
 
-    private static void updatePlayer(Player player) {
-        TeamRegistryManager teamRegistry = TeamRegistryManager.instance();
-        Team team = teamRegistry.getTeam(player.getUniqueId());
-        if (team == null) return;
+    private static void updateTeam(Team team, Player player) {
+        Group targetGroup = AiresBuildings.getUserGroup(player.getUniqueId());
+        if (targetGroup != null) {
+            CachedMetaData metaData = targetGroup.getCachedData().getMetaData();
+            String metaPrefix = metaData.getPrefix();
+            String metaColor = metaData.getMetaValue("color");
 
+            if (metaPrefix != null) {
+                team.setPrefix(metaPrefix);
+            }
+
+            if (metaColor != null) {
+                if (metaColor.startsWith("§") && metaColor.length() >= 2) {
+                    team.setColor(ChatColor.getByChar(metaColor.charAt(1)));
+                } else {
+                    team.setColor(ChatColor.valueOf(metaColor));
+                }
+            }
+        }
 
         if (AFKHandler.instance().isAFK(player.getUniqueId())) {
             team.setSuffix(AFK_SUFFIX);
         } else {
             team.setSuffix("");
         }
-        team.broadcastPacket(Team.Mode.TEAM_UPDATED);
     }
 
     private static String getSortID(Group group) {

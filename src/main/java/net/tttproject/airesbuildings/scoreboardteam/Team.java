@@ -49,8 +49,8 @@ public class Team {
         return team;
     }
 
-    public void broadcastPacket(Mode mode) {
-        getPacket(mode).broadcastPacket();
+    public void sendPacket(Player player, Mode mode) {
+        getPacket(mode).sendPacket(player);
     }
 
     private int getData() {
