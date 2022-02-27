@@ -53,14 +53,14 @@ public final class AFKHandler implements Listener {
                     Location lastLocation = afkStats.getLastKnownLocation();
                     afkStats.setLastKnownLocation(currentLocation);
 
-                    if (afkStats.isAfk()) return; //Player is afk, so we do not have to check
+                    if (afkStats.isAfk()) continue; //Player is afk, so we do not have to check
                     if (!currentLocation.equals(lastLocation))
-                        return; //Player has moved -> he is not afk
+                        continue; //Player has moved -> he is not afk
 
 
                     if (afkStats.getTime() <= 0) { //Player started to be afk
                         afkStats.setLastTimeMoved(System.currentTimeMillis());
-                        return;
+                        continue;
                     }
 
                     if (afkStats.getTime() > AFK_TIME) {
