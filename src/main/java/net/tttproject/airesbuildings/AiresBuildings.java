@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 public class AiresBuildings extends JavaPlugin {
 
-    public static final String PREFIX = "§9AiresBuildings §8» §7";
+    public static final String PREFIX = "§9AriesBuildings §8» §7";
 
     @Override
     public void onEnable() {
