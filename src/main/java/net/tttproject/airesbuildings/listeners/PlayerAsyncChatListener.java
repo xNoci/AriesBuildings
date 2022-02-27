@@ -11,7 +11,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 public class PlayerAsyncChatListener implements Listener {
 
-    private static final String CHAT_FORMAT = "%prefix%%name%§8: §7%text%";
+    private static final String CHAT_FORMAT = "%prefix%%name%§8: §f%text%";
 
     @EventHandler
     public void handleAsyncPlayerChat(AsyncPlayerChatEvent event) {
