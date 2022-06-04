@@ -3,6 +3,7 @@ package net.tttproject.ariesbuildings.utils;
 import net.luckperms.api.cacheddata.CachedMetaData;
 import net.luckperms.api.model.group.Group;
 import net.tttproject.ariesbuildings.AriesBuildings;
+import net.tttproject.ariesbuildings.hooks.LuckPermsHook;
 import net.tttproject.ariesbuildings.scoreboardteam.PlayerTeamRegistry;
 import net.tttproject.ariesbuildings.scoreboardteam.Team;
 import net.tttproject.ariesbuildings.scoreboardteam.TeamRegistryManager;
@@ -49,7 +50,7 @@ public class TabList {
         String prefix = "§7Gast §8| §7";
         ChatColor color = ChatColor.GRAY;
 
-        Group targetGroup = AriesBuildings.getUserGroup(target.getUniqueId());
+        Group targetGroup = LuckPermsHook.getUserGroup(target.getUniqueId());
         if (targetGroup != null) {
             teamName = getSortID(targetGroup) + target.getUniqueId().toString().replaceAll("-", "");
 
@@ -86,7 +87,7 @@ public class TabList {
     }
 
     private static void updateTeam(Team team, Player player) {
-        Group targetGroup = AriesBuildings.getUserGroup(player.getUniqueId());
+        Group targetGroup = LuckPermsHook.getUserGroup(player.getUniqueId());
         if (targetGroup != null) {
             CachedMetaData metaData = targetGroup.getCachedData().getMetaData();
             String metaPrefix = metaData.getPrefix();
