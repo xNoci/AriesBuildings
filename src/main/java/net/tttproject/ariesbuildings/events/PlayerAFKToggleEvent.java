@@ -1,7 +1,7 @@
-package net.tttproject.airesbuildings.events;
+package net.tttproject.ariesbuildings.events;
 
 import lombok.Getter;
-import net.tttproject.airesbuildings.events.core.PlayerEventCore;
+import net.tttproject.ariesbuildings.events.core.PlayerEventCore;
 import org.bukkit.entity.Player;
 
 public class PlayerAFKToggleEvent extends PlayerEventCore {

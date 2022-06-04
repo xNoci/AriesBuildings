@@ -1,4 +1,4 @@
-package net.tttproject.airesbuildings.scoreboardteam;
+package net.tttproject.ariesbuildings.scoreboardteam;
 
 import com.google.common.collect.Maps;
 import org.bukkit.entity.Player;

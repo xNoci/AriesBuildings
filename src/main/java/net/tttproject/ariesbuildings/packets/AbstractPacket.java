@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.tttproject.airesbuildings.packets;
+package net.tttproject.ariesbuildings.packets;
 
 import java.lang.reflect.InvocationTargetException;
 

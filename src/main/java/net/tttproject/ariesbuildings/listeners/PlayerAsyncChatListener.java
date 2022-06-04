@@ -1,9 +1,9 @@
-package net.tttproject.airesbuildings.listeners;
+package net.tttproject.ariesbuildings.listeners;
 
 import net.luckperms.api.cacheddata.CachedMetaData;
 import net.luckperms.api.model.group.Group;
 import net.md_5.bungee.api.ChatColor;
-import net.tttproject.airesbuildings.AiresBuildings;
+import net.tttproject.ariesbuildings.AriesBuildings;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -30,7 +30,7 @@ public class PlayerAsyncChatListener implements Listener {
     }
 
     private String formatMessage(Player player, String message) {
-        Group group = AiresBuildings.getUserGroup(player.getUniqueId());
+        Group group = AriesBuildings.getUserGroup(player.getUniqueId());
         String color = ChatColor.GRAY.toString();
         String displayName = "Default";
 

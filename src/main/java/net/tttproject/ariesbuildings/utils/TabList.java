@@ -1,11 +1,11 @@
-package net.tttproject.airesbuildings.utils;
+package net.tttproject.ariesbuildings.utils;
 
 import net.luckperms.api.cacheddata.CachedMetaData;
 import net.luckperms.api.model.group.Group;
-import net.tttproject.airesbuildings.AiresBuildings;
-import net.tttproject.airesbuildings.scoreboardteam.PlayerTeamRegistry;
-import net.tttproject.airesbuildings.scoreboardteam.Team;
-import net.tttproject.airesbuildings.scoreboardteam.TeamRegistryManager;
+import net.tttproject.ariesbuildings.AriesBuildings;
+import net.tttproject.ariesbuildings.scoreboardteam.PlayerTeamRegistry;
+import net.tttproject.ariesbuildings.scoreboardteam.Team;
+import net.tttproject.ariesbuildings.scoreboardteam.TeamRegistryManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -49,7 +49,7 @@ public class TabList {
         String prefix = "§7Gast §8| §7";
         ChatColor color = ChatColor.GRAY;
 
-        Group targetGroup = AiresBuildings.getUserGroup(target.getUniqueId());
+        Group targetGroup = AriesBuildings.getUserGroup(target.getUniqueId());
         if (targetGroup != null) {
             teamName = getSortID(targetGroup) + target.getUniqueId().toString().replaceAll("-", "");
 
@@ -86,7 +86,7 @@ public class TabList {
     }
 
     private static void updateTeam(Team team, Player player) {
-        Group targetGroup = AiresBuildings.getUserGroup(player.getUniqueId());
+        Group targetGroup = AriesBuildings.getUserGroup(player.getUniqueId());
         if (targetGroup != null) {
             CachedMetaData metaData = targetGroup.getCachedData().getMetaData();
             String metaPrefix = metaData.getPrefix();

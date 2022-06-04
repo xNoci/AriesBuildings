@@ -1,10 +1,10 @@
-package net.tttproject.airesbuildings.scoreboardteam;
+package net.tttproject.ariesbuildings.scoreboardteam;
 
 import com.comphenix.protocol.wrappers.WrappedChatComponent;
 import com.google.common.collect.Lists;
 import lombok.Getter;
 import lombok.Setter;
-import net.tttproject.airesbuildings.packets.WrapperPlayServerScoreboardTeam;
+import net.tttproject.ariesbuildings.packets.WrapperPlayServerScoreboardTeam;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 

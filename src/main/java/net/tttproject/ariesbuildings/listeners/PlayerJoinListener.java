@@ -1,10 +1,10 @@
-package net.tttproject.airesbuildings.listeners;
+package net.tttproject.ariesbuildings.listeners;
 
 import net.luckperms.api.cacheddata.CachedMetaData;
 import net.luckperms.api.model.group.Group;
 import net.md_5.bungee.api.ChatColor;
-import net.tttproject.airesbuildings.AiresBuildings;
-import net.tttproject.airesbuildings.utils.TabList;
+import net.tttproject.ariesbuildings.AriesBuildings;
+import net.tttproject.ariesbuildings.utils.TabList;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -16,7 +16,7 @@ public class PlayerJoinListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void handlePlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        Group group = AiresBuildings.getUserGroup(player.getUniqueId());
+        Group group = AriesBuildings.getUserGroup(player.getUniqueId());
 
         String color = ChatColor.GRAY.toString();
         String displayName = "Default";

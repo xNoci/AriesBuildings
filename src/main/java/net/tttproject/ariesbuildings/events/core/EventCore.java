@@ -1,4 +1,4 @@
-package net.tttproject.airesbuildings.events.core;
+package net.tttproject.ariesbuildings.events.core;
 
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;

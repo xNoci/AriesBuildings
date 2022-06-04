@@ -1,5 +1,5 @@
-name: AiresBuildings
-main: net.tttproject.airesbuildings.AiresBuildings
+name: AriesBuildings
+main: net.tttproject.ariesbuildings.AriesBuildings
 author: nociixD
 api-version: 1.16
 version: 0.1

@@ -1,4 +1,4 @@
-package net.tttproject.airesbuildings.events.core;
+package net.tttproject.ariesbuildings.events.core;
 
 import lombok.Getter;
 import org.bukkit.entity.Player;

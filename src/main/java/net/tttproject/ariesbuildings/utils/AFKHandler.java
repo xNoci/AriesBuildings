@@ -1,9 +1,9 @@
-package net.tttproject.airesbuildings.utils;
+package net.tttproject.ariesbuildings.utils;
 
 import com.google.common.collect.Maps;
 import lombok.Getter;
 import lombok.Setter;
-import net.tttproject.airesbuildings.events.PlayerAFKToggleEvent;
+import net.tttproject.ariesbuildings.events.PlayerAFKToggleEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
