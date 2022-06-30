@@ -17,15 +17,18 @@ public class PlayerQuitListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void handlePlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
-        Group group = LuckPermsHook.getUserGroup(player.getUniqueId());
 
         String color = ChatColor.GRAY.toString();
         String displayName = "Default";
 
-        if (group != null) {
-            CachedMetaData metaData = group.getCachedData().getMetaData();
-            color = metaData.getMetaValue("color");
-            displayName = group.getDisplayName();
+        if(LuckPermsHook.isEnabled()) {
+            Group group = LuckPermsHook.getUserGroup(player.getUniqueId());
+
+            if (group != null) {
+                CachedMetaData metaData = group.getCachedData().getMetaData();
+                color = metaData.getMetaValue("color");
+                displayName = group.getDisplayName();
+            }
         }
 
         event.setQuitMessage(String.format("§c« %s", color + displayName + color + " §8| " + color + player.getName()));

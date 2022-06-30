@@ -2,7 +2,6 @@ package net.tttproject.ariesbuildings.utils;
 
 import net.luckperms.api.cacheddata.CachedMetaData;
 import net.luckperms.api.model.group.Group;
-import net.tttproject.ariesbuildings.AriesBuildings;
 import net.tttproject.ariesbuildings.hooks.LuckPermsHook;
 import net.tttproject.ariesbuildings.scoreboardteam.PlayerTeamRegistry;
 import net.tttproject.ariesbuildings.scoreboardteam.Team;
@@ -50,27 +49,29 @@ public class TabList {
         String prefix = "§7Gast §8| §7";
         ChatColor color = ChatColor.GRAY;
 
-        Group targetGroup = LuckPermsHook.getUserGroup(target.getUniqueId());
-        if (targetGroup != null) {
-            teamName = getSortID(targetGroup) + target.getUniqueId().toString().replaceAll("-", "");
 
-            CachedMetaData metaData = targetGroup.getCachedData().getMetaData();
-            String metaPrefix = metaData.getPrefix();
-            String metaColor = metaData.getMetaValue("color");
+        if (LuckPermsHook.isEnabled()) {
+            Group targetGroup = LuckPermsHook.getUserGroup(target.getUniqueId());
+            if (targetGroup != null) {
+                teamName = getSortID(targetGroup) + target.getUniqueId().toString().replaceAll("-", "");
 
-            if (metaPrefix != null) {
-                prefix = metaPrefix;
-            }
+                CachedMetaData metaData = targetGroup.getCachedData().getMetaData();
+                String metaPrefix = metaData.getPrefix();
+                String metaColor = metaData.getMetaValue("color");
 
-            if (metaColor != null) {
-                if (metaColor.startsWith("§") && metaColor.length() >= 2) {
-                    color = ChatColor.getByChar(metaColor.charAt(1));
-                } else {
-                    color = ChatColor.valueOf(metaColor);
+                if (metaPrefix != null) {
+                    prefix = metaPrefix;
+                }
+
+                if (metaColor != null) {
+                    if (metaColor.startsWith("§") && metaColor.length() >= 2) {
+                        color = ChatColor.getByChar(metaColor.charAt(1));
+                    } else {
+                        color = ChatColor.valueOf(metaColor);
+                    }
                 }
             }
         }
-
 
         Team team = new Team(teamName);
         team.getPlayers().add(target);
@@ -87,21 +88,23 @@ public class TabList {
     }
 
     private static void updateTeam(Team team, Player player) {
-        Group targetGroup = LuckPermsHook.getUserGroup(player.getUniqueId());
-        if (targetGroup != null) {
-            CachedMetaData metaData = targetGroup.getCachedData().getMetaData();
-            String metaPrefix = metaData.getPrefix();
-            String metaColor = metaData.getMetaValue("color");
+        if (LuckPermsHook.isEnabled()) {
+            Group targetGroup = LuckPermsHook.getUserGroup(player.getUniqueId());
+            if (targetGroup != null) {
+                CachedMetaData metaData = targetGroup.getCachedData().getMetaData();
+                String metaPrefix = metaData.getPrefix();
+                String metaColor = metaData.getMetaValue("color");
 
-            if (metaPrefix != null) {
-                team.setPrefix(metaPrefix);
-            }
+                if (metaPrefix != null) {
+                    team.setPrefix(metaPrefix);
+                }
 
-            if (metaColor != null) {
-                if (metaColor.startsWith("§") && metaColor.length() >= 2) {
-                    team.setColor(ChatColor.getByChar(metaColor.charAt(1)));
-                } else {
-                    team.setColor(ChatColor.valueOf(metaColor));
+                if (metaColor != null) {
+                    if (metaColor.startsWith("§") && metaColor.length() >= 2) {
+                        team.setColor(ChatColor.getByChar(metaColor.charAt(1)));
+                    } else {
+                        team.setColor(ChatColor.valueOf(metaColor));
+                    }
                 }
             }
         }

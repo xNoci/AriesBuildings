@@ -16,16 +16,20 @@ public class PlayerJoinListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void handlePlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        Group group = LuckPermsHook.getUserGroup(player.getUniqueId());
 
         String color = ChatColor.GRAY.toString();
         String displayName = "Default";
 
-        if (group != null) {
-            CachedMetaData metaData = group.getCachedData().getMetaData();
-            color = metaData.getMetaValue("color");
-            displayName = group.getDisplayName();
+        if (LuckPermsHook.isEnabled()) {
+            Group group = LuckPermsHook.getUserGroup(player.getUniqueId());
+
+            if (group != null) {
+                CachedMetaData metaData = group.getCachedData().getMetaData();
+                color = metaData.getMetaValue("color");
+                displayName = group.getDisplayName();
+            }
         }
+
 
         event.setJoinMessage(String.format("§a» %s", color + displayName + color + " §8| " + color + player.getName()));
 

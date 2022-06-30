@@ -30,14 +30,17 @@ public class PlayerAsyncChatListener implements Listener {
     }
 
     private String formatMessage(Player player, String message) {
-        Group group = LuckPermsHook.getUserGroup(player.getUniqueId());
         String color = ChatColor.GRAY.toString();
         String displayName = "Default";
 
-        if (group != null) {
-            CachedMetaData metaData = group.getCachedData().getMetaData();
-            color = metaData.getMetaValue("color");
-            displayName = group.getDisplayName();
+        if (LuckPermsHook.isEnabled()) {
+            Group group = LuckPermsHook.getUserGroup(player.getUniqueId());
+
+            if (group != null) {
+                CachedMetaData metaData = group.getCachedData().getMetaData();
+                color = metaData.getMetaValue("color");
+                displayName = group.getDisplayName();
+            }
         }
 
         String format = CHAT_FORMAT;
