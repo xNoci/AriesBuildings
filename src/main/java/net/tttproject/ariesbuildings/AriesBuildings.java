@@ -3,6 +3,7 @@ package net.tttproject.ariesbuildings;
 import net.luckperms.api.event.node.NodeMutateEvent;
 import net.tttproject.ariesbuildings.hooks.LuckPermsHook;
 import net.tttproject.ariesbuildings.listeners.*;
+import net.tttproject.ariesbuildings.sql.BlockHistorySQL;
 import net.tttproject.ariesbuildings.utils.AFKHandler;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -13,6 +14,7 @@ public class AriesBuildings extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        BlockHistorySQL.create();
 
         AFKHandler.instance().register(this);
         AFKHandler.instance().start(this);
