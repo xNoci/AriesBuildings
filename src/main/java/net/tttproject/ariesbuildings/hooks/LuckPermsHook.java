@@ -31,7 +31,7 @@ public class LuckPermsHook {
             Class.forName("net.luckperms.api.LuckPerms");
             found = true;
         } catch (ClassNotFoundException e) {
-            LOGGER.info("Could not find CloudNet driver.");
+            LOGGER.info("Could not find LuckPerms API.");
         }
 
         foundCloudNet = found;
@@ -40,7 +40,6 @@ public class LuckPermsHook {
     public static boolean isEnabled() {
         return foundCloudNet;
     }
-
 
     public static <T extends LuckPermsEvent> void subscribe(JavaPlugin plugin, Class<T> eventClass, Consumer<? super T> handler) {
         EventBus eventBus = LuckPermsProvider.get().getEventBus();
