@@ -1,9 +1,17 @@
 package net.tttproject.ariesbuildings.blockhistory;
 
+import lombok.Getter;
+
 public enum BlockHistoryAction {
 
-    PLACE,
-    BREAK;
+    PLACE("Placed"),
+    BREAK("Destroyed");
+
+    @Getter private final String info;
+
+    BlockHistoryAction(String info) {
+        this.info = info;
+    }
 
     public static BlockHistoryAction byName(String name) {
         for (BlockHistoryAction value : values()) {
