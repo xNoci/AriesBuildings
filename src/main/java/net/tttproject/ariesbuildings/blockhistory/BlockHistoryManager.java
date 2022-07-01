@@ -37,7 +37,7 @@ public class BlockHistoryManager {
         });
     }
 
-    private ProjectFuture<BlockHistory> getHistory(Location location) {
+    public ProjectFuture<BlockHistory> getHistory(Location location) {
         ProjectFuture<BlockHistory> future = new ProjectFuture<>();
 
         BlockHistory history = blockHistoryData.getIfPresent(location.hashCode());
