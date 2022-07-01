@@ -1,6 +1,7 @@
 package net.tttproject.ariesbuildings;
 
 import net.luckperms.api.event.node.NodeMutateEvent;
+import net.tttproject.ariesbuildings.commands.BlockHistoryCommand;
 import net.tttproject.ariesbuildings.hooks.LuckPermsHook;
 import net.tttproject.ariesbuildings.listeners.*;
 import net.tttproject.ariesbuildings.sql.BlockHistorySQL;
@@ -20,6 +21,7 @@ public class AriesBuildings extends JavaPlugin {
         AFKHandler.instance().start(this);
 
         registerListener();
+        registerCommands();
     }
 
     @Override
@@ -40,5 +42,8 @@ public class AriesBuildings extends JavaPlugin {
         }
     }
 
+    private void registerCommands() {
+        new BlockHistoryCommand(this);
+    }
 
 }
