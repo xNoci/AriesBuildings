@@ -1,6 +1,5 @@
 package net.tttproject.ariesbuildings.sql;
 
-import lombok.SneakyThrows;
 import net.tttproject.ariesbuildings.blockhistory.BlockHistory;
 import net.tttproject.ariesbuildings.blockhistory.BlockHistoryAction;
 import net.tttprojekt.system.ProjectSystem;
@@ -9,7 +8,6 @@ import net.tttprojekt.system.utils.ProjectFuture;
 import org.bukkit.Location;
 import org.bukkit.Material;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.UUID;
@@ -66,11 +64,6 @@ public class BlockHistorySQL {
 
                     return blockHistory;
                 });
-    }
-
-    @SneakyThrows
-    private static ProjectFuture<Boolean> hasToolbar(UUID uuid) {
-        return DATABASE.queryResult("SELECT UUID FROM Toolbar WHERE UUID = ?", preparedStatement -> preparedStatement.setString(1, uuid.toString())).map(ResultSet::next);
     }
 
 }
