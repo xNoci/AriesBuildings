@@ -76,11 +76,11 @@ public class BlockHistory {
                 .newLine()
                 .newLine()
                 .newLine()
-                .add(BookUtil.TextBuilder.of(AriesBuildings.getInstance().getName())
+                .add(BookUtil.TextBuilder.of("     " + AriesBuildings.getInstance().getName())
                         .color(ChatColor.DARK_GRAY)
                         .style(ChatColor.ITALIC)
                         .onHover(BookUtil.HoverAction
-                                .showText("§fPlugin by "
+                                .showText("§fPlugin version " + AriesBuildings.getInstance().getDescription().getVersion() + " by "
                                         + String.join(", ",
                                         AriesBuildings.getInstance().getDescription().getAuthors())
                                         + ".")).build())
@@ -127,17 +127,26 @@ public class BlockHistory {
     private List<BaseComponent[]> getEntryPages() {
         List<BlockHistoryEntry> entries = getEntries();
         List<BaseComponent[]> pages = Lists.newArrayList();
-        BookUtil.PageBuilder currentPage = BookUtil.PageBuilder.of("");
+        BookUtil.PageBuilder currentPage = null;
 
         for (int i = 0; i < entries.size(); i++) {
+            if (currentPage == null) {
+                currentPage = BookUtil.PageBuilder.of("");
+            }
+
             BlockHistoryEntry currentEntry = entries.get(i);
             currentPage.add(currentEntry.getBookText()).newLine().newLine();
 
             if ((i + 1) % ENTRIES_PER_PAGE == 0) {
                 pages.add(currentPage.build());
-                currentPage = BookUtil.PageBuilder.of("");
+                currentPage = null;
             }
         }
+
+        if (currentPage != null) {
+            pages.add(currentPage.build());
+        }
+
         return pages;
     }
 
