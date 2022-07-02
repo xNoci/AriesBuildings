@@ -5,7 +5,8 @@ import lombok.Getter;
 public enum BlockHistoryAction {
 
     PLACE("Placed"),
-    BREAK("Destroyed");
+    BREAK("Destroyed"),
+    WORLD_EDIT_SET("Set (WE)");
 
     @Getter private final String info;
 
