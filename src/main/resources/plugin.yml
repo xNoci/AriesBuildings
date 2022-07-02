@@ -7,3 +7,7 @@ version: 0.2
 depend:
   - ProtocolLib
   - LuckPerms
+
+
+softdepend:
+  - FastAsyncWorldEdit (WorldEdit)
