@@ -17,7 +17,7 @@ public class BlockHistorySQL {
     private static final Database DATABASE = ProjectSystem.getDatabase("AriesBuildings");
 
     public static void create() {
-        DATABASE.update("CREATE TABLE IF NOT EXISTS BlockHistory (changed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, uuid VARCHAR(36), action VARCHAR(10), material VARCHAR(64), world VARCHAR(32), x INT, y INT, z INT)");
+        DATABASE.update("CREATE TABLE IF NOT EXISTS BlockHistory (changed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, uuid VARCHAR(36), action VARCHAR(32), material VARCHAR(64), world VARCHAR(32), x INT, y INT, z INT)");
     }
 
 
