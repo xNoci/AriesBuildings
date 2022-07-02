@@ -20,7 +20,7 @@ public class PlayerAsyncChatListener implements Listener {
         String message = event.getMessage();
         message = message.replace("%", "%%");
         message = message.replace("\\", "\\\\");
-        if (player.hasPermission("chatcolor")) {
+        if (player.hasPermission("aries.chatcolor")) {
             message = message.replace("&", "§");
         }
 

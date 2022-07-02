@@ -20,7 +20,7 @@ public class PlayerInteractListener implements Listener {
         Player player = event.getPlayer();
 
         if (Items.BLOCK_HISTORY.isSameItem(event.getItem())) {
-            if (!player.hasPermission("blockhistory")) {
+            if (!player.hasPermission("aries.blockhistory")) {
                 player.sendMessage(AriesBuildings.NO_PERMISSION);
                 return;
             }
