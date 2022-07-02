@@ -23,7 +23,7 @@ public class LuckPermsHook {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LuckPermsHook.class);
 
-    private static final boolean foundCloudNet;
+    private static final boolean foundLuckPerms;
 
     static {
         boolean found = false;
@@ -34,11 +34,11 @@ public class LuckPermsHook {
             LOGGER.info("Could not find LuckPerms API.");
         }
 
-        foundCloudNet = found;
+        foundLuckPerms = found;
     }
 
     public static boolean isEnabled() {
-        return foundCloudNet;
+        return foundLuckPerms;
     }
 
     public static <T extends LuckPermsEvent> void subscribe(JavaPlugin plugin, Class<T> eventClass, Consumer<? super T> handler) {
