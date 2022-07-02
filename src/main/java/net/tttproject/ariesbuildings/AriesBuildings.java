@@ -3,6 +3,7 @@ package net.tttproject.ariesbuildings;
 import lombok.Getter;
 import net.luckperms.api.event.node.NodeMutateEvent;
 import net.tttproject.ariesbuildings.commands.BlockHistoryCommand;
+import net.tttproject.ariesbuildings.hooks.FaweHook;
 import net.tttproject.ariesbuildings.hooks.LuckPermsHook;
 import net.tttproject.ariesbuildings.listeners.*;
 import net.tttproject.ariesbuildings.sql.BlockHistorySQL;
@@ -50,6 +51,11 @@ public class AriesBuildings extends JavaPlugin {
         if (LuckPermsHook.isEnabled()) {
             LuckPermsHook.subscribe(this, NodeMutateEvent.class, NodeMutateListener::handleNodeMutate);
         }
+
+        if (FaweHook.isEnabled()) {
+            FaweHook.registerEvent(new WorldEditListener());
+        }
+
     }
 
     private void registerCommands() {
