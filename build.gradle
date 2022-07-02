@@ -1,14 +1,14 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ConfigureShadowRelocation
+
 plugins {
     id 'java'
-    id 'com.github.johnrengelman.shadow' version '7.0.0'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
 group 'net.tttproject'
 version '0.2'
 
 compileJava.options.encoding = 'UTF-8'
-
-tasks.build.dependsOn tasks.shadowJar
 
 repositories {
     mavenCentral()
@@ -35,3 +35,10 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.24'
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
 }
+
+task relocateShadowJar(type: ConfigureShadowRelocation) {
+    target = tasks.shadowJar
+    prefix = "net.tttproject.dep"
+}
+
+tasks.shadowJar.dependsOn tasks.relocateShadowJar
