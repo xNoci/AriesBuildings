@@ -4,6 +4,8 @@ import net.tttproject.ariesbuildings.AriesBuildings;
 import net.tttproject.ariesbuildings.blockhistory.BlockHistoryManager;
 import net.tttproject.ariesbuildings.utils.Items;
 import org.bukkit.Bukkit;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -15,21 +17,25 @@ public class PlayerInteractListener implements Listener {
 
     @EventHandler
     public void handlePlayerInteract(PlayerInteractEvent event) {
-        if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
-
         Player player = event.getPlayer();
 
         if (Items.BLOCK_HISTORY.isSameItem(event.getItem())) {
-            if (!player.hasPermission("aries.blockhistory")) {
-                player.sendMessage(AriesBuildings.NO_PERMISSION);
+            event.setCancelled(true);
+
+            if (event.getAction() != Action.RIGHT_CLICK_BLOCK && event.getAction() != Action.LEFT_CLICK_BLOCK) {
                 return;
             }
 
-            BlockHistoryManager.instance().getHistory(event.getClickedBlock().getLocation())
+            Block selectedBlock = event.getClickedBlock();
+            if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+                BlockFace direction = event.getBlockFace();
+                selectedBlock = selectedBlock.getRelative(direction);
+            }
+
+            BlockHistoryManager.instance().getHistory(selectedBlock.getLocation())
                     .onSuccess(blockHistory -> {
                         Bukkit.getScheduler().runTask(AriesBuildings.getInstance(), () -> BookUtil.openPlayer(player, blockHistory.getBookItem()));
                     });
-            return;
         }
     }
 

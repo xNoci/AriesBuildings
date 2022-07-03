@@ -6,7 +6,7 @@ import org.bukkit.inventory.ItemStack;
 
 public enum Items {
 
-    BLOCK_HISTORY(Material.BLAZE_ROD, "§cBlock History", "", "§7By right clicking a block you can", "§7see the history of a block.");
+    BLOCK_HISTORY(Material.BEDROCK, "§cBlock History",  "§7Get the history of a block.", "", "§o§7(Left-click block to see history)", "§o§7(Place block to see history)");
 
     private final Material material;
     private final String displayName;
