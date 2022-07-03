@@ -2,7 +2,6 @@ package net.tttproject.ariesbuildings.commands;
 
 
 import net.tttproject.ariesbuildings.AriesBuildings;
-import net.tttproject.ariesbuildings.sql.ToolbarSQL;
 import net.tttproject.ariesbuildings.utils.Items;
 import net.tttprojekt.system.command.spigot.SpigotCommand;
 import org.bukkit.command.CommandSender;
@@ -17,7 +16,10 @@ public class BlockHistoryCommand extends SpigotCommand {
 
     @Override
     public void onPlayerExecute(Player player, String[] args) {
-        //TODO
+        if (!player.hasPermission("aries.blockhistory.get")) {
+            player.sendMessage(AriesBuildings.NO_PERMISSION);
+            return;
+        }
         player.getInventory().addItem(Items.BLOCK_HISTORY.getItemStack());
     }
 

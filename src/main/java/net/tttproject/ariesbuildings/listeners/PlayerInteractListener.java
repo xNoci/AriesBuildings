@@ -21,6 +21,10 @@ public class PlayerInteractListener implements Listener {
 
         if (Items.BLOCK_HISTORY.isSameItem(event.getItem())) {
             event.setCancelled(true);
+            if (!player.hasPermission("aries.blockhistory.use")) {
+                player.sendMessage(AriesBuildings.NO_PERMISSION);
+                return;
+            }
 
             if (event.getAction() != Action.RIGHT_CLICK_BLOCK && event.getAction() != Action.LEFT_CLICK_BLOCK) {
                 return;
