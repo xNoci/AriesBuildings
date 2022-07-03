@@ -1,13 +1,12 @@
-name: AriesBuildings
+name: ${plugin.name}
 main: net.tttproject.ariesbuildings.AriesBuildings
 author: Noci
 api-version: 1.16
-version: 0.2
+version: ${plugin.version}
 
 depend:
   - ProtocolLib
   - Projekt-System
-
 
 softdepend:
   - FastAsyncWorldEdit

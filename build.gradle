@@ -1,4 +1,5 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ConfigureShadowRelocation
+import org.apache.tools.ant.filters.ReplaceTokens
 
 plugins {
     id 'java'
@@ -6,9 +7,14 @@ plugins {
 }
 
 group 'net.tttproject'
-version '0.2'
+version '0.2.1'
 
 compileJava.options.encoding = 'UTF-8'
+
+project.ext {
+    PLUGIN_VERSION = version
+    PLUGIN_NAME = "AriesBuildings"
+}
 
 repositories {
     mavenCentral()
@@ -44,9 +50,22 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
 }
 
+shadowJar {
+    archiveBaseName.set(PLUGIN_NAME)
+    archiveClassifier.set('')
+    archiveVersion.set('')
+}
+
 task relocateShadowJar(type: ConfigureShadowRelocation) {
     target = tasks.shadowJar
     prefix = "net.tttproject.dep"
 }
 
 tasks.shadowJar.dependsOn tasks.relocateShadowJar
+
+processResources {
+    filter(ReplaceTokens, tokens: [
+            'plugin.version': project.ext.PLUGIN_VERSION,
+            'plugin.name'   : project.ext.PLUGIN_NAME
+    ], beginToken: "\${", endToken: "}")
+}
