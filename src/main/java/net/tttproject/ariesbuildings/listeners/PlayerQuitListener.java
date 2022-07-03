@@ -21,7 +21,7 @@ public class PlayerQuitListener implements Listener {
         String color = ChatColor.GRAY.toString();
         String displayName = "Default";
 
-        if(LuckPermsHook.isEnabled()) {
+        if (LuckPermsHook.isEnabled()) {
             Group group = LuckPermsHook.getUserGroup(player.getUniqueId());
 
             if (group != null) {
@@ -31,7 +31,7 @@ public class PlayerQuitListener implements Listener {
             }
         }
 
-        event.setQuitMessage(String.format("§c« %s", color + displayName + color + " §8| " + color + player.getName()));
+        event.setQuitMessage("§c« %s".formatted(color + displayName + color + " §8| " + color + player.getName()));
 
         AFKHandler.instance().removePlayer(player);
         TeamRegistryManager.instance().removeRegistry(player);

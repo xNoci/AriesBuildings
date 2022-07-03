@@ -120,7 +120,7 @@ public class TabList {
         if (group == null) return "999";
         CachedMetaData metaData = group.getCachedData().getMetaData();
         int sortID = metaData.getMetaValue("sortID", Integer::parseInt).orElse(999);
-        return String.format("%03d", sortID);
+        return "%03d".formatted(sortID);
     }
 
 }

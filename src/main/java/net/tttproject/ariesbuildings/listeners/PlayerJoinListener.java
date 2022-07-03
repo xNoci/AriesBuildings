@@ -31,7 +31,7 @@ public class PlayerJoinListener implements Listener {
         }
 
 
-        event.setJoinMessage(String.format("§a» %s", color + displayName + color + " §8| " + color + player.getName()));
+        event.setJoinMessage("§a» %s".formatted(color + displayName + color + " §8| " + color + player.getName()));
 
         TabList.updateAll();
     }
