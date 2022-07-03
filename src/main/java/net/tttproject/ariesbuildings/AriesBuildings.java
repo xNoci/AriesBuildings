@@ -46,6 +46,7 @@ public class AriesBuildings extends JavaPlugin {
         pluginManager.registerEvents(new PlayerQuitListener(), this);
         pluginManager.registerEvents(new PlayerAFKToggleListener(), this);
         pluginManager.registerEvents(new PlayerInteractListener(), this);
+        pluginManager.registerEvents(new PlayerDropItemListener(), this);
         pluginManager.registerEvents(new BlockListener(), this);
 
         if (LuckPermsHook.isEnabled()) {
