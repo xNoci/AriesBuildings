@@ -6,6 +6,9 @@ import net.luckperms.api.event.EventBus;
 import net.luckperms.api.event.LuckPermsEvent;
 import net.luckperms.api.model.group.Group;
 import net.luckperms.api.model.user.User;
+import net.tttproject.ariesbuildings.AriesBuildings;
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,24 +24,18 @@ import java.util.stream.Collectors;
 public class LuckPermsHook {
 
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(LuckPermsHook.class);
-
-    private static final boolean foundLuckPerms;
-
-    static {
-        boolean found = false;
-        try {
-            Class.forName("net.luckperms.api.LuckPerms");
-            found = true;
-        } catch (ClassNotFoundException e) {
-            LOGGER.info("Could not find LuckPerms API.");
-        }
-
-        foundLuckPerms = found;
-    }
+    private static boolean checktPlugin = false;
+    private static boolean found;
 
     public static boolean isEnabled() {
-        return foundLuckPerms;
+        if (!checktPlugin) {
+            checktPlugin = true;
+            Plugin plugin = Bukkit.getPluginManager().getPlugin("LuckPerms");
+            found = plugin != null;
+
+            AriesBuildings.getInstance().getLogger().info("%s is %s.".formatted(LuckPermsHook.class.getSimpleName(), found ? "enabled" : "disabled"));
+        }
+        return found;
     }
 
     public static <T extends LuckPermsEvent> void subscribe(JavaPlugin plugin, Class<T> eventClass, Consumer<? super T> handler) {

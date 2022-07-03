@@ -1,30 +1,26 @@
 package net.tttproject.ariesbuildings.hooks;
 
 import com.fastasyncworldedit.core.Fawe;
+import net.tttproject.ariesbuildings.AriesBuildings;
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class FaweHook {
 
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(FaweHook.class);
-
-    private static final boolean foundFawe;
-
-    static {
-        boolean found = false;
-        try {
-            Class.forName("com.fastasyncworldedit.core.Fawe");
-            found = true;
-        } catch (ClassNotFoundException e) {
-            LOGGER.info("Could not find Fawe.");
-        }
-
-        foundFawe = found;
-    }
+    private static boolean checktPlugin = false;
+    private static boolean found;
 
     public static boolean isEnabled() {
-        return foundFawe;
+        if (!checktPlugin) {
+            checktPlugin = true;
+            Plugin plugin = Bukkit.getPluginManager().getPlugin("FastAsyncWorldEdit");
+            found = plugin != null;
+
+            AriesBuildings.getInstance().getLogger().info("%s is %s.".formatted(FaweHook.class.getSimpleName(), found ? "enabled" : "disabled"));
+        }
+        return found;
     }
 
     public static void registerEvent(Object event) {
