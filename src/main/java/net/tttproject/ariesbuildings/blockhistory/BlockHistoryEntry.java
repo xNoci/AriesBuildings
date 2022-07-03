@@ -34,9 +34,21 @@ public class BlockHistoryEntry {
             name = "Unknown";
         }
 
+        String actionInfo = StringUtils.isBlank(action.getDetailedInfo()) ? "" : "§bAction Details§7:\n§b" + action.getDetailedInfo() + "\n";
+
         return BookUtil.TextBuilder
-                .of(String.format("§7[§c%s§7] §0%s by %s", COMPACT_FORMAT.format(new Date(timestamp)), action.getInfo(), name))
-                .onHover(BookUtil.HoverAction.showText(String.format("§bUUID§7: §b%s\n§bType§7: §b%s\n\n§bTimestamp§7:\n  §b%s\n  %s ms", uuid, material.name(), DETAILED_FORMAT.format(new Date(timestamp)), timestamp)))
+                .of("§7[§c%s§7] §0%s by %s".formatted(COMPACT_FORMAT.format(new Date(timestamp)), action.getActionName(), name))
+                .onHover(BookUtil.HoverAction.showText(
+                        """
+                                §bUUID§7: §b%s
+                                §bType§7: §b%s
+                                %s
+                                §bTimestamp§7:
+                                  §b%s
+                                  %s ms
+                                  
+                                     """
+                                .formatted(uuid, material.name(), actionInfo, DETAILED_FORMAT.format(new Date(timestamp)), timestamp)))
                 .build();
     }
 
