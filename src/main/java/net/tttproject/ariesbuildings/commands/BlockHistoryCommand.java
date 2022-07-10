@@ -3,7 +3,7 @@ package net.tttproject.ariesbuildings.commands;
 
 import net.tttproject.ariesbuildings.AriesBuildings;
 import net.tttproject.ariesbuildings.utils.Items;
-import net.tttprojekt.system.command.spigot.SpigotCommand;
+import net.tttproject.system.spigot.command.SpigotCommand;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;

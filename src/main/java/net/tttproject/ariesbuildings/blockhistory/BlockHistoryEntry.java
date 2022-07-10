@@ -2,7 +2,7 @@ package net.tttproject.ariesbuildings.blockhistory;
 
 import lombok.Getter;
 import net.md_5.bungee.api.chat.BaseComponent;
-import net.tttprojekt.system.ProjectSystem;
+import net.tttproject.system.ProjectSystem;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Material;
 import xyz.upperlevel.spigot.book.BookUtil;

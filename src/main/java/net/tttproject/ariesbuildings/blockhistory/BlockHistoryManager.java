@@ -3,7 +3,7 @@ package net.tttproject.ariesbuildings.blockhistory;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import net.tttproject.ariesbuildings.sql.BlockHistorySQL;
-import net.tttprojekt.system.utils.ProjectFuture;
+import net.tttproject.system.utils.ProjectFuture;
 import org.bukkit.Location;
 import org.bukkit.Material;
 

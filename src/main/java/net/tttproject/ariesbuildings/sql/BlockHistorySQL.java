@@ -2,9 +2,9 @@ package net.tttproject.ariesbuildings.sql;
 
 import net.tttproject.ariesbuildings.blockhistory.BlockHistory;
 import net.tttproject.ariesbuildings.blockhistory.BlockHistoryAction;
-import net.tttprojekt.system.ProjectSystem;
-import net.tttprojekt.system.sql.Database;
-import net.tttprojekt.system.utils.ProjectFuture;
+import net.tttproject.system.ProjectSystem;
+import net.tttproject.system.database.Database;
+import net.tttproject.system.utils.ProjectFuture;
 import org.bukkit.Location;
 import org.bukkit.Material;
 

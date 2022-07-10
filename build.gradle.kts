@@ -39,7 +39,7 @@ dependencies {
     compileOnly("com.comphenix.protocol:ProtocolLib:4.7.0")
     compileOnly("net.luckperms:api:5.4")
     compileOnly("org.spigotmc:spigot:1.16.5-R0.1-SNAPSHOT")
-    compileOnly("net.tttproject:project-system:1.2.2-SNAPSHOT")
+    compileOnly("net.tttproject:project-system:1.3.1")
 
     compileOnly("org.projectlombok:lombok:1.18.24")
     annotationProcessor("org.projectlombok:lombok:1.18.24")
