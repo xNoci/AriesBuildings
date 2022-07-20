@@ -4,8 +4,6 @@ import com.fastasyncworldedit.core.Fawe;
 import net.tttproject.ariesbuildings.AriesBuildings;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class FaweHook {
 
@@ -24,6 +22,7 @@ public class FaweHook {
     }
 
     public static void registerEvent(Object event) {
+        if (!isEnabled()) return;
         Fawe.instance().getWorldEdit().getEventBus().register(event);
     }
 

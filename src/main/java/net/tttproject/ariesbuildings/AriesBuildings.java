@@ -49,14 +49,8 @@ public class AriesBuildings extends JavaPlugin {
         pluginManager.registerEvents(new PlayerDropItemListener(), this);
         pluginManager.registerEvents(new BlockListener(), this);
 
-        if (LuckPermsHook.isEnabled()) {
-            LuckPermsHook.subscribe(this, NodeMutateEvent.class, NodeMutateListener::handleNodeMutate);
-        }
-
-        if (FaweHook.isEnabled()) {
-            FaweHook.registerEvent(new WorldEditListener());
-        }
-
+        LuckPermsHook.subscribe(this, NodeMutateEvent.class, NodeMutateListener::handleNodeMutate);
+        FaweHook.registerEvent(new WorldEditListener());
     }
 
     private void registerCommands() {

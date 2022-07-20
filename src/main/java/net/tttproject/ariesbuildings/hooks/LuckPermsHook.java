@@ -10,8 +10,6 @@ import net.tttproject.ariesbuildings.AriesBuildings;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -39,6 +37,7 @@ public class LuckPermsHook {
     }
 
     public static <T extends LuckPermsEvent> void subscribe(JavaPlugin plugin, Class<T> eventClass, Consumer<? super T> handler) {
+        if (!isEnabled()) return;
         EventBus eventBus = LuckPermsProvider.get().getEventBus();
         eventBus.subscribe(plugin, eventClass, handler);
     }
