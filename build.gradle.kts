@@ -3,10 +3,7 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.apache.tools.ant.filters.ReplaceTokens
 
 group "net.tttproject"
-version "0.2.1"
-
-val pluginVersion = version
-val pluginName = "AriesBuildings"
+version = project.property("version")!!
 
 plugins {
     id("java")
@@ -30,11 +27,11 @@ repositories {
 }
 
 dependencies {
+    implementation("xyz.upperlevel.spigot.book:spigot-book-api:1.6")
+
     implementation(platform("com.intellectualsites.bom:bom-1.18.x:1.9"))
     compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Core")
     compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Bukkit")
-
-    implementation("xyz.upperlevel.spigot.book:spigot-book-api:1.6")
 
     compileOnly("com.comphenix.protocol:ProtocolLib:4.7.0")
     compileOnly("net.luckperms:api:5.4")
@@ -61,9 +58,8 @@ tasks.named<ShadowJar>("shadowJar").configure {
 
 tasks {
     shadowJar {
-        archiveBaseName.set(pluginName)
-        archiveClassifier.set("")
-        archiveVersion.set("")
+        archiveFileName.set("${project.property("name")}-${project.property("version")}.jar")
+
     }
 
     compileJava {
@@ -75,8 +71,8 @@ tasks {
             "beginToken" to "\${",
             "endToken" to "}",
             "tokens" to mapOf(
-                "plugin.version" to pluginVersion,
-                "plugin.name" to pluginName
+                "plugin.version" to project.property("version"),
+                "plugin.name" to project.property("name")
             )
         )
     }
